@@ -60,7 +60,7 @@ void control_yaw(str_eul *angles, str_con *controllerYaw, str_rem *remote){
   if(((remote->rudder > 1500) && (remote->rudder < 1600))/*&&((remote->aileron > 1490) && (remote->aileron < 1550))*/) servo_driveYaw(regulate*1000);
   else{
     controllerYaw->integral = 0;
-      if(pulseIn(12,HIGH)<1500)  servo_driveYaw(angle);
+      if(pulseIn(12,HIGH)<1500 || digitalRead(5)==HIGH)  servo_driveYaw(angle);
       else servo_driveYaw(regulateVel);
   
   }
@@ -77,7 +77,7 @@ void control_pitch(str_eul *angles, str_con *controllerPitch, str_rem *remote){
   if(integral>90000) integral = 90000;
   if(integral<-90000) integral = -90000;
   long int regulate = proportional + integral;
-  if(pulseIn(7,HIGH)>1500)servo_drivePitch(regulate); 
+  if(pulseIn(7,HIGH)>1500 || digitalRead(4)==HIGH)servo_drivePitch(regulate); 
   else servo_drivePitch(angle);
 }
 
